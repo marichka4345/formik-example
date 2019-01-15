@@ -1,9 +1,11 @@
+import * as Yup from 'yup';
+import {EditorState} from 'draft-js';
+
 import * as FIELDS from '../../../constants/form-fields';
 import {OPTIONS} from '../../../constants/options';
 import * as CONTROL_TYPE from '../../../constants/control-types';
 import {text} from '../../../constants/validation-regexps';
 import {AUTOCOMPLETE_TYPE} from '../../common/autocomplete/constants/types';
-import * as Yup from 'yup';
 
 export const FORM_SCHEMA = {
     [FIELDS.TEXT1]: {
@@ -30,7 +32,7 @@ export const FORM_SCHEMA = {
         type: CONTROL_TYPE.SWITCH
     },
     [FIELDS.DRAFTJS]: {
-        type: CONTROL_TYPE.TEXT
+        type: CONTROL_TYPE.DRAFTJS
     },
     [FIELDS.RADIOGROUP1]: {
         type: CONTROL_TYPE.RADIOGROUP,
@@ -46,7 +48,7 @@ export const INITIAL_VALUES = {
     [FIELDS.AUTOCOMPLETE1]: '',
     [FIELDS.AUTOCOMPLETE2]: [],
     [FIELDS.TOGGLER]: '',
-    [FIELDS.DRAFTJS]: '',
+    [FIELDS.DRAFTJS]: EditorState.createEmpty(),
     [FIELDS.RADIOGROUP1]: ''
 };
 

@@ -6,9 +6,11 @@ import {Dropdown} from './components/dropdown/dropdown';
 import {Autocomplete} from './components/autocomplete/autocomplete';
 import {Switch} from './components/switch/switch';
 import {RadioGroup} from './components/radio-group/radio-group';
+import {DraftJs} from './components/draft-js/draft-js';
 import * as CONTROL_TYPE from '../../constants/control-types';
 import {renderError, shouldDisplayError} from '../../services/control-errors';
 import './form.css';
+
 export const TestForm = () => {
 
     const renderControls = (errors, touched) => {
@@ -49,6 +51,11 @@ export const TestForm = () => {
                     control = <RadioGroup
                       {...commonProps}
                       groupName={groupName}
+                    />;
+                    break;
+                case CONTROL_TYPE.DRAFTJS:
+                    control = <DraftJs
+                      {...commonProps}
                     />;
                     break;
                 case CONTROL_TYPE.TEXT:
