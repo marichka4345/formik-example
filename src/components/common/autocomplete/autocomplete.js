@@ -3,7 +3,25 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import NoSsr from '@material-ui/core/NoSsr';
 import FormControl from '@material-ui/core/FormControl';
+import Chip from '@material-ui/core/Chip';
+import CancelIcon from '@material-ui/icons/Cancel';
+import {AUTOCOMPLETE_TYPE} from './constants/types';
 import './autocomplete.css';
+
+function MultiValue(props) {
+    return (
+      <Chip
+        tabIndex={-1}
+        label={props.children}
+        onDelete={props.removeProps.onClick}
+        deleteIcon={<CancelIcon {...props.removeProps} />}
+      />
+    );
+}
+
+const components = {
+    MultiValue
+};
 
 export default class Autocomplete extends Component {
     state = {
@@ -13,18 +31,24 @@ export default class Autocomplete extends Component {
     onChange = async (selectedOption) => {
         const {
             form: {setFieldValue},
-            field: {name}
+            field: {name},
+            type
         } = this.props;
 
         await this.setState({selectedOption});
 
-        setFieldValue(name, selectedOption.value);
+        const value = type === AUTOCOMPLETE_TYPE.SINGLE
+          ? selectedOption.value
+          : selectedOption.map(({value}) => value);
+
+        setFieldValue(name, value);
     };
 
     render() {
         const {
             hasError,
-            options
+            options,
+            type
         } = this.props;
 
         return (
@@ -42,6 +66,8 @@ export default class Autocomplete extends Component {
                         textFieldProps={{
                             error: hasError
                         }}
+                        isMulti={type === AUTOCOMPLETE_TYPE.MULTI}
+                        components={components}
                       />
                   </NoSsr>
               </FormControl>

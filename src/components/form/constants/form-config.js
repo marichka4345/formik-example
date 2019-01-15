@@ -68,7 +68,6 @@ export const VALIDATION_SCHEMA = Yup.object().shape({
     [FIELDS.AUTOCOMPLETE1]: Yup.string()
       .required('Autocomplete1 is required'),
     [FIELDS.AUTOCOMPLETE2]: Yup.array()
-      .of(Yup.string())
       .min(2, 'You should choose at least 2 values')
       .max(5, 'You should choose maximum 5 values')
       .required('Autocomplete2 is required')
