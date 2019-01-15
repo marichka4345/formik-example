@@ -6,3 +6,4 @@ export const AUTOCOMPLETE1 = 'autocomplete1';
 export const AUTOCOMPLETE2 = 'autocomplete2';
 export const TOGGLER = 'toggler';
 export const DRAFTJS = 'draftjs';
+export const RADIOGROUP1 = 'radiogroup1';

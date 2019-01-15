@@ -1,39 +1,54 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import NoSsr from '@material-ui/core/NoSsr';
 import FormControl from '@material-ui/core/FormControl';
 import './autocomplete.css';
 
-export default function Autocomplete ({
-                                          hasError,
-                                          field,
-                                          form: {values, setFieldValue},
-                                          options
-                                      }) {
-    const {name} = field;
+export default class Autocomplete extends Component {
+    state = {
+        selectedOption: null
+    };
 
-    return (
-      <div className="root">
-          <FormControl
-            fullWidth
-            error={hasError}
-          >
-                <NoSsr>
-                    <Select
-                      options={options}
-                      placeholder="Search a value"
-                      value={values[name]}
-                      onChange={selectedOption => setFieldValue(name, selectedOption)}
-                      textFieldProps={{
-                          error: hasError
-                      }}
-                    />
-                </NoSsr>
-          </FormControl>
-      </div>
-    );
-};
+    onChange = async (selectedOption) => {
+        const {
+            form: {setFieldValue},
+            field: {name}
+        } = this.props;
+
+        await this.setState({selectedOption});
+
+        setFieldValue(name, selectedOption.value);
+    };
+
+    render() {
+        const {
+            hasError,
+            options
+        } = this.props;
+
+        return (
+          <div className="root">
+              <FormControl
+                fullWidth
+                error={hasError}
+              >
+                  <NoSsr>
+                      <Select
+                        options={options}
+                        placeholder="Search a value"
+                        value={this.state.selectedOption}
+                        onChange={this.onChange}
+                        textFieldProps={{
+                            error: hasError
+                        }}
+                      />
+                  </NoSsr>
+              </FormControl>
+          </div>
+        );
+    }
+}
 
 Autocomplete.propTypes = {
     hasError: PropTypes.bool.isRequired,

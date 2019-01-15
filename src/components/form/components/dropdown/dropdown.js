@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Field} from 'formik';
 import DropdownControl from '../../../common/dropdown/dropdown';
-import {DROPDOWN_VALUES} from '../../../../constants/dropdown-values';
+import {OPTIONS} from '../../../../constants/options';
 
 export const Dropdown = ({name, hasError}) => {
     const renderDropdown = ({field}) => {
         const controlProps = {
             field,
             hasError,
-            values: DROPDOWN_VALUES
+            values: OPTIONS
         };
         return (<DropdownControl {...controlProps} />);
     };

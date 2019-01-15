@@ -1,5 +1,5 @@
 import * as FIELDS from '../../../constants/form-fields';
-import {DROPDOWN_VALUES} from '../../../constants/dropdown-values';
+import {OPTIONS} from '../../../constants/options';
 import * as CONTROL_TYPE from '../../../constants/control-types';
 import {text} from '../../../constants/validation-regexps';
 import {AUTOCOMPLETE_TYPE} from '../../common/autocomplete/constants/types';
@@ -31,6 +31,10 @@ export const FORM_SCHEMA = {
     },
     [FIELDS.DRAFTJS]: {
         type: CONTROL_TYPE.TEXT
+    },
+    [FIELDS.RADIOGROUP1]: {
+        type: CONTROL_TYPE.RADIOGROUP,
+        groupName: 'radioGroup1'
     }
 };
 
@@ -38,11 +42,12 @@ export const INITIAL_VALUES = {
     [FIELDS.TEXT1]: '',
     [FIELDS.TEXT2]: '',
     [FIELDS.DROPDOWN1]: '',
-    [FIELDS.DROPDOWN2]: DROPDOWN_VALUES[0].id,
+    [FIELDS.DROPDOWN2]: OPTIONS[0].id,
     [FIELDS.AUTOCOMPLETE1]: '',
     [FIELDS.AUTOCOMPLETE2]: [],
     [FIELDS.TOGGLER]: '',
-    [FIELDS.DRAFTJS]: ''
+    [FIELDS.DRAFTJS]: '',
+    [FIELDS.RADIOGROUP1]: ''
 };
 
 export const VALIDATION_SCHEMA = Yup.object().shape({

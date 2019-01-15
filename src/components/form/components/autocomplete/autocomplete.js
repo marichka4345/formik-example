@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import {Field} from 'formik';
 import {AUTOCOMPLETE_TYPE} from './constants/types';
 import AutocompleteControl from '../../../common/autocomplete/autocomplete';
-import {DROPDOWN_VALUES} from '../../../../constants/dropdown-values';
+import {OPTIONS} from '../../../../constants/options';
 
-const options = DROPDOWN_VALUES.map(({id: value, value: label}) => ({value, label}));
+const options = OPTIONS.map(({id: value, value: label}) => ({value, label}));
 
 export const Autocomplete = ({name, type, hasError}) => {
     const renderAutocomplete = ({field, form}) => {

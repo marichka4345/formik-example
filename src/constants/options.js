@@ -1,4 +1,4 @@
-export const DROPDOWN_VALUES = [
+export const OPTIONS = [
   {
       id: 1,
       value: 'first'
