@@ -47,7 +47,7 @@ export const INITIAL_VALUES = {
     [FIELDS.DROPDOWN2]: OPTIONS[0].id,
     [FIELDS.AUTOCOMPLETE1]: '',
     [FIELDS.AUTOCOMPLETE2]: [],
-    [FIELDS.TOGGLER]: '',
+    [FIELDS.TOGGLER]: false,
     [FIELDS.DRAFTJS]: EditorState.createEmpty(),
     [FIELDS.RADIOGROUP1]: ''
 };

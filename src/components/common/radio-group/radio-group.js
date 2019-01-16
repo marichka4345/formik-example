@@ -15,7 +15,7 @@ export default function RadioGroupControl ({groupName, field, hasError, values})
                   values.map(({id: value, value: label}) => (
                     <FormControlLabel
                       key={value}
-                      control={<Radio/>}
+                      control={<Radio color="primary" />}
                       label={label}
                       value={String(value)}
                     />

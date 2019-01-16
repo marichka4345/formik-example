@@ -4,21 +4,16 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import SwitchElement from '@material-ui/core/Switch';
 
 export class Switch extends Component {
-    state = {
-        checked: false
-    };
+    renderSwitch = ({field}) => {
+        const {value, name} = field;
 
-    handleChange = event => {
-        this.setState({ checked: event.target.checked });
-    };
-
-    renderSwitch = () => {
         return (
           <FormControlLabel
             control={
                 <SwitchElement
-                  checked={this.state.checked}
-                  onChange={this.handleChange}
+                  {...field}
+                  checked={value}
+                  value={name}
                   color="primary"
                 />
             }
@@ -36,4 +31,4 @@ export class Switch extends Component {
           />
         );
     }
-};
+}
