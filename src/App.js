@@ -1,7 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+
+import JssProvider from 'react-jss/lib/JssProvider';
+import { create } from 'jss';
+import { createGenerateClassName, jssPreset } from '@material-ui/core/styles';
+
 import {TestForm} from './components/form/form';
 import {SubmitButtons} from './components/submit-buttons/submit-buttons';
-import './App.css';
+
+const generateClassName = createGenerateClassName();
+const jss = create({
+    ...jssPreset(),
+    insertionPoint: 'insertion-point-jss'
+});
 
 export default class App extends Component {
   state = {
@@ -30,14 +40,18 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <SubmitButtons
-          isSubmitting={this.state.isSubmitting}
-          onClick={this.onSubmitClick}
-          onSubmitWithoutValidation={this.onSubmitWithoutValidation}
-        />
-        <TestForm ref={this.form} changeIsSubmitting={this.changeIsSubmitting} />
-      </div>
+      <JssProvider jss={jss} generateClassName={generateClassName}>
+          <Fragment>
+
+            <SubmitButtons
+              isSubmitting={this.state.isSubmitting}
+              onClick={this.onSubmitClick}
+              onSubmitWithoutValidation={this.onSubmitWithoutValidation}
+            />
+            <TestForm ref={this.form} changeIsSubmitting={this.changeIsSubmitting} />
+
+          </Fragment>
+      </JssProvider>
     );
   }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import {Formik, Form} from 'formik';
 import * as CONFIG from './constants/form-config';
 import {renderControls} from './services/control-factory';
-import './form.css';
+import styles from './form.module.css';
 
 export const TestForm = React.forwardRef(({changeIsSubmitting}, ref) => {
 
@@ -26,16 +26,10 @@ export const TestForm = React.forwardRef(({changeIsSubmitting}, ref) => {
           validationSchema={CONFIG.VALIDATION_SCHEMA}
         >
             {
-                ({errors, touched, values}) => {
+                ({errors, touched}) => {
                     return (
-                      <Form>
-                          <div className="fields">
-                              {renderControls(errors, touched)}
-                          </div>
-
-                          <pre>
-                          {JSON.stringify(values, null, 2)}
-                      </pre>
+                      <Form className={styles.fields}>
+                          {renderControls(errors, touched)}
                       </Form>
                     )
                 }

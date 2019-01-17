@@ -1,3 +1,3 @@
-export const BOLD = 'bold';
-export const ITALIC = 'italic';
-export const LINK = 'link';
+export const BOLD = 'BOLD';
+export const ITALIC = 'ITALIC';
+export const LINK = 'LINK';
