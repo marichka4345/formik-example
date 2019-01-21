@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Field} from 'formik';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import SwitchElement from '@material-ui/core/Switch';
 
-export class Switch extends Component {
-    renderSwitch = ({field}) => {
-        const {value, name} = field;
+export const Switch = ({name}) => {
+    const renderSwitch = ({field}) => {
+        const {value} = field;
 
         return (
           <FormControlLabel
@@ -22,13 +22,11 @@ export class Switch extends Component {
         );
     };
 
-    render() {
-        return (
-          <Field
-            fullWidth
-            name={this.props.name}
-            render={this.renderSwitch}
-          />
-        );
-    }
-}
+    return (
+      <Field
+        fullWidth
+        name={name}
+        render={renderSwitch}
+      />
+    );
+};

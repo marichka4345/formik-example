@@ -63,9 +63,6 @@ export default class Autocomplete extends Component {
                         placeholder="Search a value"
                         value={this.state.selectedOption}
                         onChange={this.onChange}
-                        textFieldProps={{
-                            error: hasError
-                        }}
                         isMulti={type === AUTOCOMPLETE_TYPE.MULTI}
                         components={components}
                       />
