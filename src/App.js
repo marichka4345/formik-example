@@ -6,6 +6,9 @@ import { createGenerateClassName, jssPreset } from '@material-ui/core/styles';
 
 import {TestForm} from './components/form/form';
 import {SubmitButtons} from './components/submit-buttons/submit-buttons';
+import {getServerError, sleep} from './services/helpers';
+import {setFieldError} from './services/errors';
+import {AUTOCOMPLETE1, TEXT1} from './constants/form-fields';
 
 const generateClassName = createGenerateClassName();
 const jss = create({
@@ -24,18 +27,29 @@ export default class App extends Component {
       this.setState({isSubmitting});
   };
 
-  onSubmitClick = value => {
+  onSubmit = value => {
     this.form.current.handleSubmit(value);
   };
 
-  onSubmitWithoutValidation = () => {
+  onSubmitWithoutValidation = async () => {
       this.changeIsSubmitting(true);
-      new Promise(resolve => {
-          setTimeout(resolve, 2000);
-      }).then(() => {
-          console.log(this.form.current.state.values);
-          this.changeIsSubmitting(false);
+
+      await sleep(1000);
+
+      window.alert('Submitted');
+      console.log(this.form.current.state.values);
+
+      this.changeIsSubmitting(false);
+  };
+
+  onSubmitWithError = async () => {
+      this.changeIsSubmitting(true);
+      const errors = await getServerError([TEXT1, AUTOCOMPLETE1]);
+
+      Object.entries(errors).forEach(([name, error]) => {
+          setFieldError(this.form.current, name, error);
       });
+      this.changeIsSubmitting(false);
   };
 
   render() {
@@ -45,8 +59,9 @@ export default class App extends Component {
 
             <SubmitButtons
               isSubmitting={this.state.isSubmitting}
-              onClick={this.onSubmitClick}
+              onSubmit={this.onSubmit}
               onSubmitWithoutValidation={this.onSubmitWithoutValidation}
+              onSubmitWithError={this.onSubmitWithError}
             />
             <TestForm ref={this.form} changeIsSubmitting={this.changeIsSubmitting} />
 

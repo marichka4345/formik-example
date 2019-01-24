@@ -6,8 +6,9 @@ import {Switch} from '../components/switch/switch';
 import {RadioGroup} from '../components/radio-group/radio-group';
 import {DraftJs} from '../components/draft-js/draft-js';
 import {TextInput} from '../components/text-input/text-input';
-import {renderError, shouldDisplayError} from '../../../services/control-errors';
+import {renderError, shouldDisplayError} from '../../../services/errors';
 import * as CONTROL_TYPE from '../../../constants/control-types';
+import {OPTIONS} from '../../../constants/options';
 
 export const renderControls = (errors, touched) => {
     let control = null;
@@ -30,12 +31,13 @@ export const renderControls = (errors, touched) => {
             case CONTROL_TYPE.DROPDOWN:
                 control = <Dropdown
                   {...commonProps}
+                  options={OPTIONS}
                 />;
                 break;
             case CONTROL_TYPE.AUTOCOMPLETE:
                 control = <Autocomplete
                   {...commonProps}
-                  type={autocompleteType}
+                  autocompleteType={autocompleteType}
                 />;
                 break;
             case CONTROL_TYPE.SWITCH:
@@ -47,6 +49,7 @@ export const renderControls = (errors, touched) => {
                 control = <RadioGroup
                   {...commonProps}
                   groupName={groupName}
+                  options={OPTIONS}
                 />;
                 break;
             case CONTROL_TYPE.DRAFTJS:

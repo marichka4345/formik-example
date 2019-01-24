@@ -1,18 +1,29 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Field} from 'formik';
-import TextInputControl from '../../../common/text-input/text-input';
+import TextField from '@material-ui/core/TextField/TextField';
 
 export const TextInput  = ({name, hasError}) => {
-    const renderText = ({field}) => {
-        const controlProps = {field, hasError};
 
-        return <TextInputControl  {...controlProps} />
+    const renderControl = ({field}) => {
+        return (
+          <TextField
+            error={hasError}
+            label={name}
+            {...field}
+          />
+        );
     };
 
     return (
       <Field
         name={name}
-        render={renderText}
+        render={renderControl}
       />
     );
+};
+
+TextInput.propTypes = {
+    name: PropTypes.string.isRequired,
+    hasError: PropTypes.bool.isRequired
 };

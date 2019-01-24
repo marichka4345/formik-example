@@ -1,37 +1,38 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import PropTypes from 'prop-types';
+import {SubmitButton} from './components/submit-button/submit-button';
 import styles from './submit-buttons.module.css';
 
-export const SubmitButtons = ({onClick, isSubmitting, onSubmitWithoutValidation}) => {
+export const SubmitButtons = ({
+                                  onSubmit,
+                                  onSubmitWithoutValidation,
+                                  onSubmitWithError,
+                                  isSubmitting
+}) => {
     return (
-        <div className={styles.root}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={onClick}
-              disabled={isSubmitting}
-              className={styles.button}
-            >
-                Save with validation
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={onSubmitWithoutValidation}
-              disabled={isSubmitting}
-              className={styles.button}
-            >
-                Save without validation
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={onSubmitWithoutValidation}
-              disabled={isSubmitting}
-              className={styles.button}
-            >
-                Save with server error
-            </Button>
-        </div>
+      <div className={styles.root}>
+          <SubmitButton
+            isSubmitting={isSubmitting}
+            onClick={onSubmit}
+            title="Save with validation"
+          />
+          <SubmitButton
+            isSubmitting={isSubmitting}
+            onClick={onSubmitWithoutValidation}
+            title="Save without validation"
+          />
+          <SubmitButton
+            isSubmitting={isSubmitting}
+            onClick={onSubmitWithError}
+            title="Save with server error"
+          />
+      </div>
     );
+};
+
+SubmitButtons.propTypes = {
+    isSubmitting: PropTypes.bool.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+    onSubmitWithoutValidation: PropTypes.func.isRequired,
+    onSubmitWithError: PropTypes.func.isRequired
 };

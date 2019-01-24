@@ -2,20 +2,24 @@ import React from 'react';
 import {Formik, Form} from 'formik';
 import * as CONFIG from './constants/form-config';
 import {renderControls} from './services/control-factory';
+import {sleep} from '../../services/helpers';
 import styles from './form.module.css';
 
 export const TestForm = React.forwardRef(({changeIsSubmitting}, ref) => {
 
-    const onSubmit = (values, {setSubmitting}) => {
+    const onSubmit = async (values, {setSubmitting, setErrors}) => {
         changeIsSubmitting(true);
 
-        new Promise(resolve => {
-            setTimeout(resolve, 2000);
-        }).then(() => {
-            setSubmitting(false);
-            changeIsSubmitting(false);
-            console.log(values);
-        });
+        await sleep(1000);
+
+        setSubmitting(false);
+        changeIsSubmitting(false);
+        alert('Submitted');
+        console.log(values);
+
+        // To display server error after successful validation:
+        //
+        // setErrors({text1: 'Test error'});
     };
 
     return (

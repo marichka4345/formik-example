@@ -5,7 +5,8 @@ import * as FIELDS from '../../../constants/form-fields';
 import {OPTIONS} from '../../../constants/options';
 import * as CONTROL_TYPE from '../../../constants/control-types';
 import {text} from '../../../constants/validation-regexps';
-import {AUTOCOMPLETE_TYPE} from '../../common/autocomplete/constants/types';
+import {AUTOCOMPLETE_TYPE} from '../../../constants/autocomplete-types';
+import {getDraftText} from '../../../services/helpers';
 
 export const FORM_SCHEMA = {
     [FIELDS.TEXT1]: {
@@ -70,5 +71,20 @@ export const VALIDATION_SCHEMA = Yup.object().shape({
     [FIELDS.AUTOCOMPLETE2]: Yup.array()
       .min(2, 'You should choose at least 2 values')
       .max(5, 'You should choose maximum 5 values')
-      .required('Autocomplete2 is required')
+      .required('Autocomplete2 is required'),
+    [FIELDS.DRAFTJS]: Yup.mixed()
+      .test(
+        'minDraft',
+        'You should enter minimum 5 symbols',
+        value => {
+            return getDraftText(value).length >= 5;
+        })
+      .test(
+        'maxDraft',
+        'You should enter less than 100 symbols',
+        value => {
+            return getDraftText(value).length < 100;
+        }),
+    [FIELDS.RADIOGROUP1]: Yup.string()
+      .required('You should choose one option')
 });
