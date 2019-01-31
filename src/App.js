@@ -1,12 +1,12 @@
-import React, { Component, Fragment } from 'react';
+import React, {Component, Fragment} from 'react';
 
 import JssProvider from 'react-jss/lib/JssProvider';
-import { create } from 'jss';
-import { createGenerateClassName, jssPreset } from '@material-ui/core/styles';
+import {create} from 'jss';
+import {createGenerateClassName, jssPreset} from '@material-ui/core/styles';
 
 import {TestForm} from './components/form/form';
 import {SubmitButtons} from './components/submit-buttons/submit-buttons';
-import {getServerError, sleep} from './services/helpers';
+import {getServerError, getServerResponse} from './services/helpers';
 import {setFieldError} from './services/errors';
 import {AUTOCOMPLETE1, TEXT1} from './constants/form-fields';
 
@@ -34,22 +34,25 @@ export default class App extends Component {
   onSubmitWithoutValidation = async () => {
       this.changeIsSubmitting(true);
 
-      await sleep(1000);
-
-      window.alert('Submitted');
-      console.log(this.form.current.state.values);
+      const values = this.form.current.state.values;
+      const response = await getServerResponse(values);
 
       this.changeIsSubmitting(false);
+
+      console.log('Submitted with ', response);
   };
 
   onSubmitWithError = async () => {
       this.changeIsSubmitting(true);
-      const errors = await getServerError([TEXT1, AUTOCOMPLETE1]);
 
+      const {errors} = await getServerError([TEXT1, AUTOCOMPLETE1]);
       Object.entries(errors).forEach(([name, error]) => {
           setFieldError(this.form.current, name, error);
       });
+
       this.changeIsSubmitting(false);
+
+      console.log('Got error ', errors);
   };
 
   render() {

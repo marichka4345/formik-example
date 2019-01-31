@@ -1,43 +1,52 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Formik, Form} from 'formik';
-import * as CONFIG from './constants/form-config';
+import {INITIAL_VALUES, VALIDATION_SCHEMA} from './constants/form-config';
 import {renderControls} from './services/control-factory';
-import {sleep} from '../../services/helpers';
+import {getServerResponse} from '../../services/helpers';
 import styles from './form.module.css';
 
-export const TestForm = React.forwardRef(({changeIsSubmitting}, ref) => {
+class FormBase extends Component {
+    componentDidMount() {
+        console.log('Form initialized with ', INITIAL_VALUES);
+    }
 
-    const onSubmit = async (values, {setSubmitting, setErrors}) => {
+    onSubmit = async (values, {setSubmitting}) => {
+        const {changeIsSubmitting} = this.props;
         changeIsSubmitting(true);
 
-        await sleep(1000);
+        const response = await getServerResponse(values);
 
         setSubmitting(false);
         changeIsSubmitting(false);
-        alert('Submitted');
-        console.log(values);
 
-        // To display server error after successful validation:
-        //
-        // setErrors({text1: 'Test error'});
+        console.log('Submitted with ', response);
     };
 
-    return (
-        <Formik
-          ref={ref}
-          initialValues={CONFIG.INITIAL_VALUES}
-          onSubmit={onSubmit}
-          validationSchema={CONFIG.VALIDATION_SCHEMA}
-        >
-            {
-                ({errors, touched}) => {
-                    return (
-                      <Form className={styles.fields}>
-                          {renderControls(errors, touched)}
-                      </Form>
-                    )
-                }
-            }
-        </Formik>
-    );
-});
+    render() {
+        const {formRef} = this.props;
+
+        return (
+          <Formik
+            ref={formRef}
+            initialValues={INITIAL_VALUES}
+            onSubmit={this.onSubmit}
+            validationSchema={VALIDATION_SCHEMA}
+          >
+              {
+                  ({errors, touched, dirty}) => {
+                      return (
+                        <Form className={styles.fields}>
+                            <p>Form is {dirty ? 'dirty': 'pristine'}</p>
+
+                            {renderControls(errors, touched)}
+                        </Form>
+                      )
+                  }
+              }
+          </Formik>
+        );
+    }
+
+}
+
+export const TestForm = React.forwardRef((props, ref) => <FormBase formRef={ref} {...props} />);
